@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Savings Calculator</title>
+  </head>
+  <body>
+    <h1>Savings Calculator</h1>
+    <p>Enter your current savings balance: <input id="balance" type="text"></p>
+    <p>Enter the interest rate (as a decimal): <input id="interestRate" type="text"></p>
+    <p>Enter the number of years: <input id="years" type="text"></p>
+    <p>Enter your monthly contribution: <input id="monthlyContribution" type="text"></p>
+    <button id="calculate">Calculate</button>
+    <p id="output"></p>
+
+    <script>
+      let balanceInput = document.getElementById("balance");
+      let interestRateInput = document.getElementById("interestRate");
+      let yearsInput = document.getElementById("years");
+      let monthlyContributionInput = document.getElementById("monthlyContribution");
+      let calculateButton = document.getElementById("calculate");
+      let output = document.getElementById("output");
+
+      calculateButton.addEventListener("click", function() {
+        let initialBalance = parseFloat(balanceInput.value);
+        let interestRate = parseFloat(interestRateInput.value);
+        let years = parseInt(yearsInput.value);
+        let monthlyContribution = parseFloat(monthlyContributionInput.value);
+
+        let balance = initialBalance;
+        let totalInterest = 0;
+        let totalContributed = 0;
+        for (let i = 0; i < years; i++) {
+          for (let j = 0; j < 12; j++) {
+            totalContributed += monthlyContribution;
+            balance += monthlyContribution;
+            let interest = balance * interestRate / 12;
+            totalInterest += interest;
+            balance += interest;
+          }
+        }
+
+        output.innerHTML = `Your initial savings balance was $${initialBalance}.
+With a monthly contribution of $${monthlyContribution}, you contributed $${totalContributed} over ${years} years.
+You earned $${totalInterest} in interest over ${years} years.
+Your final savings balance is $${balance}.`;
+      });
+    </script>
+  </body>
+</html>
